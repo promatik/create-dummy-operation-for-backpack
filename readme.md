@@ -28,6 +28,21 @@ To use the Operation this package provides, inside your custom CrudController ad
 use \Promatik\CreateDummyOperation\Http\Controllers\Operations\CreateDummyOperation;
 ```
 
+### Configurations
+To change the configs you must edit `configs\backpack\crud.php` adding `createDummy` array to operations.
+
+```php
+'operations' => [
+    ...
+    'createDummy' => [
+        // environments where the button should appear (default is ['local', 'testing'])
+        'environment' => ['local'],
+
+        // default value for the number of entries to be added (default is 25)
+        'default' => 10,
+    ],
+```
+
 ## Overwriting
 
 If you need to change the translations or the button view, you can easily publish the files to your app, and modify those files any way you want. But please keep in mind that you will not be getting any updates on those files.
