@@ -1,5 +1,5 @@
 {
-    "name": "promatik/create-dummy-operation",
+    "name": "promatik/create-dummy-operation-for-backpack",
     "description": "CreateDummyOperation adds a button to your CRUDs to create dummy entries based on your model factories",
     "license": "MIT",
     "authors": [
@@ -9,7 +9,7 @@
             "homepage": "https://promatik.pt"
         }
     ],
-    "homepage": "https://github.com/promatik/createdummyoperation",
+    "homepage": "https://github.com/promatik/create-dummy-operation-for-backpack",
     "keywords": [
         "Laravel", "Backpack", "Backpack for Laravel", "Backpack Addon", "CreateDummyOperation"
     ],

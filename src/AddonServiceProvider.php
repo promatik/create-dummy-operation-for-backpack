@@ -7,12 +7,22 @@ use Illuminate\Support\ServiceProvider;
 class AddonServiceProvider extends ServiceProvider
 {
     protected $path;
-    protected $commands = [];
 
     public function __construct($app)
     {
         $this->app = $app;
-        $this->path = __DIR__ . '/..';
+
+        // Paths for app and package
+        $this->paths = (object) [
+            'package' => (object) [
+                'lang' => __DIR__ . '/../resources/lang/',
+                'resources' => __DIR__ . '/../resources/views/',
+            ],
+            'app' => (object) [
+                'lang' => resource_path('lang/vendor/promatik'),
+                'resources' => base_path('resources/views/vendor/promatik/createdummyoperation'),
+            ],
+        ];
     }
 
     /**
@@ -22,44 +32,25 @@ class AddonServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        dd('test');
+        // Load package translations
+        $this->loadTranslationsFrom($this->paths->package->lang, 'createdummyoperation');
 
-        if ($this->packageDirectoryExistsAndIsNotEmpty('bootstrap') &&
-            file_exists($helpers = $this->path . '/bootstrap/helpers.php')) {
-            require $helpers;
+        // If present, replace with published translations
+        if (file_exists($this->paths->app->lang)) {
+            $this->loadTranslationsFrom($this->paths->app->lang, 'createdummyoperation');
         }
 
-        if ($this->packageDirectoryExistsAndIsNotEmpty('resources/lang')) {
-            $this->loadTranslationsFrom($this->path . '/resources/lang', 'promatik.createdummyoperation');
+        // If present, load published views
+        if (file_exists($this->paths->app->resources)) {
+            $this->loadViewsFrom($this->paths->app->resources, 'createdummyoperation');
         }
 
-        if ($this->packageDirectoryExistsAndIsNotEmpty('resources/views')) {
-            $this->loadViewsFrom($this->path . '/resources/views', 'promatik.createdummyoperation');
-        }
-
-        if ($this->packageDirectoryExistsAndIsNotEmpty('database/migrations')) {
-            $this->loadMigrationsFrom($this->path . '/database/migrations');
-        }
-
-        if ($this->packageDirectoryExistsAndIsNotEmpty('routes')) {
-            $this->loadRoutesFrom($this->path . '/routes/createdummyoperation.php');
-        }
+        // Fallback to package views
+        $this->loadViewsFrom($this->paths->package->resources, 'createdummyoperation');
 
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
-        }
-    }
-
-    /**
-     * Register any package services.
-     *
-     * @return void
-     */
-    public function register(): void
-    {
-        if ($this->packageDirectoryExistsAndIsNotEmpty('config')) {
-            $this->mergeConfigFrom($this->path . '/config/createdummyoperation.php', 'promatik.createdummyoperation');
         }
     }
 
@@ -70,54 +61,14 @@ class AddonServiceProvider extends ServiceProvider
      */
     protected function bootForConsole(): void
     {
-        // Publishing the configuration file.
-        if ($this->packageDirectoryExistsAndIsNotEmpty('config')) {
-            $this->publishes([
-                $this->path . '/config/createdummyoperation.php' => config_path('promatik/createdummyoperation.php'),
-            ], 'config');
-        }
-
         // Publishing the views.
-        if ($this->packageDirectoryExistsAndIsNotEmpty('resources/views')) {
-            $this->publishes([
-                $this->path . '/resources/views' => base_path('resources/views/vendor/promatik/createdummyoperation'),
-            ], 'views');
-        }
-
-        // Publishing assets.
-        if ($this->packageDirectoryExistsAndIsNotEmpty('resources/assets')) {
-            $this->publishes([
-                $this->path . '/resources/assets' => public_path('vendor/promatik/createdummyoperation'),
-            ], 'assets');
-        }
+        $this->publishes([
+            $this->paths->package->resources => $this->paths->app->resources,
+        ], 'views');
 
         // Publishing the translation files.
-        if ($this->packageDirectoryExistsAndIsNotEmpty('resources/lang')) {
-            $this->publishes([
-                $this->path . '/resources/lang' => resource_path('lang/vendor/promatik'),
-            ], 'lang');
-        }
-
-        // Registering package commands.
-        if (!empty($this->commands)) {
-            $this->commands($this->commands);
-        }
-    }
-
-    protected function packageDirectoryExistsAndIsNotEmpty($name)
-    {
-        // check if directory exists
-        if (!is_dir($this->path . '/' . $name)) {
-            return false;
-        }
-
-        // check if directory has files
-        foreach (scandir($this->path . '/' . $name) as $file) {
-            if ($file != '.' && $file != '..' && $file != '.gitkeep') {
-                return true;
-            }
-        }
-
-        return false;
+        $this->publishes([
+            $this->paths->package->lang => $this->paths->app->lang,
+        ], 'lang');
     }
 }

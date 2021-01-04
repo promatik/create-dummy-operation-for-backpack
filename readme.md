@@ -27,7 +27,7 @@ More exactly, it adds X and Y so that you can easily do Z.
 Via Composer
 
 ``` bash
-composer require promatik/createdummyoperation
+composer require promatik/create-dummy-operation-for-backpack
 ```
 
 ## Usage
@@ -77,12 +77,12 @@ $this->crud->addField([
 
 **Step 3.** Uninstall this package. Since it only provides one file, and you're no longer using that file, it makes no sense to have the package installed:
 ```bash
-composer remove promatik/createdummyoperation
+composer remove promatik/create-dummy-operation-for-backpack
 ```
 
 ## Change log
 
-Changes are documented here on Github. Please see the [Releases tab](https://github.com/lc:vendor/createdummyoperation/releases).
+Changes are documented here on Github. Please see the [Releases tab](https://github.com/promatik/create-dummy-operation-for-backpack/releases).
 
 ## Testing
 
@@ -100,7 +100,7 @@ If you discover any security related issues, please email promatik@gmail.com ins
 
 ## Credits
 
-- [Antonio Almeida][link-author]
+- [Antonio Almeida][http://github.com/promatik]
 - [All Contributors][link-contributors]
 
 ## License
@@ -110,10 +110,10 @@ This project was released under MIT, so you can install it on top of any Backpac
 However, please note that you do need Backpack installed, so you need to also abide by its [YUMMY License](https://github.com/Laravel-Backpack/CRUD/blob/master/LICENSE.md). That means in production you'll need a Backpack license code. You can get a free one for non-commercial use (or a paid one for commercial use) on [backpackforlaravel.com](https://backpackforlaravel.com).
 
 
-[ico-version]: https://img.shields.io/packagist/v/promatik/createdummyoperation.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/promatik/createdummyoperation.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/promatik/create-dummy-operation-for-backpack.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/promatik/create-dummy-operation-for-backpack.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/promatik/createdummyoperation
-[link-downloads]: https://packagist.org/packages/promatik/createdummyoperation
+[link-packagist]: https://packagist.org/packages/promatik/create-dummy-operation-for-backpack
+[link-downloads]: https://packagist.org/packages/promatik/create-dummy-operation-for-backpack
 [link-author]: https://github.com/promatik
 [link-contributors]: ../../contributors
