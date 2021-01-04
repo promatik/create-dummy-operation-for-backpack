@@ -32,9 +32,14 @@ use \Promatik\CreateDummyOperation\Http\Controllers\Operations\CreateDummyOperat
 
 If you need to change the translations or the button view, you can easily publish the files to your app, and modify those files any way you want. But please keep in mind that you will not be getting any updates on those files.
 
-**Publishing the files**:
+
+- **Publishing views**:
 ```bash
-php artisan vendor:publish --provider="Promatik\CreateDummyOperation\AddonServiceProvider"
+php artisan vendor:publish --provider="Promatik\CreateDummyOperation\AddonServiceProvider" --tag="views"
+```
+- **Publishing translations**:
+```bash
+php artisan vendor:publish --provider="Promatik\CreateDummyOperation\AddonServiceProvider" --tag="lang"
 ```
 
 ## Change log
